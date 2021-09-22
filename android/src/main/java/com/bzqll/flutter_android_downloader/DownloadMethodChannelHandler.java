@@ -51,16 +51,8 @@ public class DownloadMethodChannelHandler implements MethodChannel.MethodCallHan
                 String originName = call.argument("originName");
                 Map<String,String> headers = call.argument("headers");
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                        this.activity.requestPermissions(permissions, PERMISSION_CODE);
-                    } else {
-                        downloadId = startDownload(url,fileName,directory,originName,headers);
-                    }
-                } else {
-                    downloadId = startDownload(url,fileName,directory,originName,headers);
-                }
+                downloadId = startDownload(url,fileName,directory,originName,headers);
+
                 result.success(downloadId);
                 break;
             default:
